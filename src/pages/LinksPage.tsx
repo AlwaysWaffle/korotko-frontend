@@ -27,6 +27,7 @@ export default function LinksPage() {
   const [originalUrl, setOriginalUrl] = useState('')
   const [customCode, setCustomCode] = useState('')
   const [expiresAt, setExpiresAt] = useState('')
+  const [pendingDelete, setPendingDelete] = useState<LinkItem | null>(null)
 
   const loadLinks = useCallback(async () => {
     setLoading(true)
@@ -82,10 +83,10 @@ export default function LinksPage() {
   }
 
   async function deleteLink(link: LinkItem) {
-    if (!window.confirm(`Удалить ссылку ${link.short_url}?`)) return
     setError('')
     try {
       await api.deleteLink(link.id)
+      setPendingDelete(null)
       await loadLinks()
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : 'Не удалось удалить ссылку.')
@@ -109,7 +110,7 @@ export default function LinksPage() {
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-ink">Мои ссылки</h1>
           <p className="mt-2 text-sm text-muted">Создавайте короткие ссылки и следите за переходами.</p>
         </div>
-        <span className="rounded-full bg-white px-3 py-1.5 text-sm text-muted shadow-sm">{links.length} на странице</span>
+        <span className="surface-pill rounded-full px-3 py-1.5 text-sm text-muted shadow-sm">{links.length} на странице</span>
       </div>
 
       <section className="panel mb-6">
@@ -138,7 +139,7 @@ export default function LinksPage() {
       {error && <div className="mb-4"><ErrorMessage message={error} onRetry={loadLinks} /></div>}
 
       <section className="panel overflow-hidden p-0">
-        <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div className="theme-border-bottom flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <div>
             <h2 className="font-semibold text-ink">Все ссылки</h2>
             <p className="mt-0.5 text-xs text-muted">Управляйте ссылками и открывайте аналитику.</p>
@@ -159,7 +160,7 @@ export default function LinksPage() {
             <div className="overflow-x-auto">
               <table className="w-full min-w-[840px] text-left text-sm">
                 <thead className="table-head"><tr><th>Ссылка</th><th>Оригинальный URL</th><th>Создана</th><th>Статус</th><th>Переходы</th><th className="text-right">Действия</th></tr></thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="table-divider">
                   {links.map((link) => {
                     const status = statusOf(link)
                     return (
@@ -178,7 +179,7 @@ export default function LinksPage() {
                           <div className="flex items-center justify-end gap-3 whitespace-nowrap">
                             <Link to={`/links/${link.id}/stats`} className="font-medium text-brand hover:underline">Статистика</Link>
                             <button onClick={() => void toggleActive(link)} className="table-action">{link.is_active ? 'Выключить' : 'Включить'}</button>
-                            <button onClick={() => void deleteLink(link)} className="table-danger">Удалить</button>
+                            <button onClick={() => setPendingDelete(link)} className="table-danger">Удалить</button>
                           </div>
                         </td>
                       </tr>
@@ -187,7 +188,7 @@ export default function LinksPage() {
                 </tbody>
               </table>
             </div>
-            <div className="flex items-center justify-between border-t border-slate-100 px-5 py-4 text-sm sm:px-6">
+            <div className="theme-border-top flex items-center justify-between px-5 py-4 text-sm sm:px-6">
               <span className="text-muted">Страница {Math.floor(offset / LIMIT) + 1}</span>
               <div className="flex gap-2">
                 <button className="button-quiet" onClick={() => setOffset(Math.max(0, offset - LIMIT))} disabled={offset === 0}>Назад</button>
@@ -197,6 +198,19 @@ export default function LinksPage() {
           </>
         )}
       </section>
+      {pendingDelete && (
+        <div className="modal-overlay">
+          <section className="modal" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+            <h2 id="delete-title" className="text-lg font-semibold text-ink">Удалить ссылку?</h2>
+            <p className="mt-2 break-all text-sm text-muted">{pendingDelete.short_url}</p>
+            <p className="mt-2 text-sm text-muted">Это действие нельзя отменить.</p>
+            <div className="mt-6 flex justify-end gap-3">
+              <button className="button-quiet" onClick={() => setPendingDelete(null)}>Отмена</button>
+              <button className="table-danger" onClick={() => void deleteLink(pendingDelete)}>Удалить</button>
+            </div>
+          </section>
+        </div>
+      )}
     </main>
   )
 }

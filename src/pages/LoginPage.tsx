@@ -44,7 +44,7 @@ export default function LoginPage() {
         </label>
         <button className="button-primary w-full" disabled={busy}>{busy ? 'Входим…' : 'Войти'}</button>
       </form>
-      <p className="mt-6 text-center text-sm text-muted">Нет аккаунта? <Link to="/register" className="font-semibold text-brand hover:text-indigo-700">Создать</Link></p>
+      <p className="mt-6 text-center text-sm text-muted">Нет аккаунта? <Link to="/register" className="auth-link font-semibold text-brand">Создать</Link></p>
     </AuthLayout>
   )
 }

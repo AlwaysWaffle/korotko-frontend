@@ -39,7 +39,7 @@ export default function RegisterPage() {
         <p className="text-xs leading-5 text-muted">Минимум 6 символов. Используйте пароль, который нигде больше не применяете.</p>
         <button className="button-primary w-full" disabled={busy}>{busy ? 'Создаём аккаунт…' : 'Создать аккаунт'}</button>
       </form>
-      <p className="mt-6 text-center text-sm text-muted">Уже зарегистрированы? <Link to="/login" className="font-semibold text-brand hover:text-indigo-700">Войти</Link></p>
+      <p className="mt-6 text-center text-sm text-muted">Уже зарегистрированы? <Link to="/login" className="auth-link font-semibold text-brand">Войти</Link></p>
     </AuthLayout>
   )
 }

@@ -9,7 +9,7 @@ export function Loading({ label = 'Загружаем данные…' }: { labe
 
 export function ErrorMessage({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
-    <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+    <div className="notice-error" role="alert">
       <p>{message}</p>
       {onRetry && <button className="mt-2 font-semibold underline" onClick={onRetry}>Попробовать снова</button>}
     </div>

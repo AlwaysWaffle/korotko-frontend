@@ -94,11 +94,16 @@ export default function StatsPage() {
               <div className="h-72 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={daily} margin={{ top: 8, right: 12, left: -18, bottom: 4 }}>
-                    <CartesianGrid stroke="#eef1f6" strokeDasharray="4 4" vertical={false} />
-                    <XAxis dataKey="date" tickFormatter={(value: string) => new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short' }).format(new Date(`${value}T00:00:00`))} axisLine={false} tickLine={false} tick={{ fill: '#8a94a6', fontSize: 12 }} />
-                    <YAxis allowDecimals={false} axisLine={false} tickLine={false} tick={{ fill: '#8a94a6', fontSize: 12 }} />
-                    <Tooltip labelFormatter={(value) => new Intl.DateTimeFormat('ru-RU', { dateStyle: 'long' }).format(new Date(`${String(value)}T00:00:00`))} />
-                    <Line type="monotone" dataKey="clicks" name="Переходы" stroke="#5145e5" strokeWidth={3} dot={false} activeDot={{ r: 5 }} />
+                    <CartesianGrid stroke="var(--border)" strokeDasharray="4 4" vertical={false} />
+                    <XAxis dataKey="date" tickFormatter={(value: string) => new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short' }).format(new Date(`${value}T00:00:00`))} axisLine={false} tickLine={false} tick={{ fill: 'var(--text-muted)', fontSize: 12 }} />
+                    <YAxis allowDecimals={false} axisLine={false} tickLine={false} tick={{ fill: 'var(--text-muted)', fontSize: 12 }} />
+                    <Tooltip
+                      labelFormatter={(value) => new Intl.DateTimeFormat('ru-RU', { dateStyle: 'long' }).format(new Date(`${String(value)}T00:00:00`))}
+                      contentStyle={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', borderRadius: '.65rem' }}
+                      labelStyle={{ color: 'var(--text-muted)' }}
+                      itemStyle={{ color: 'var(--accent)' }}
+                    />
+                    <Line type="monotone" dataKey="clicks" name="Переходы" stroke="var(--accent)" strokeWidth={3} dot={false} activeDot={{ r: 5, fill: 'var(--accent)' }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -111,18 +116,18 @@ export default function StatsPage() {
               <p className="mt-1 text-sm text-muted">Откуда приходят посетители.</p>
             </div>
             {referrers.length === 0 ? <EmptyState title="Пока нет источников" text="Источники появятся после первых переходов." /> : (
-              <div className="divide-y divide-slate-100">
+              <div className="table-divider">
                 {referrers.map((item, index) => {
                   const percentage = stats?.total_clicks ? Math.round((item.clicks / stats.total_clicks) * 100) : 0
                   return (
                     <div className="flex items-center gap-4 py-3 first:pt-0 last:pb-0" key={`${item.referrer}-${index}`}>
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-sm font-semibold text-slate-600">{index + 1}</span>
+                      <span className="referrer-index flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-semibold">{index + 1}</span>
                       <div className="min-w-0 flex-1">
                         <div className="mb-2 flex justify-between gap-3 text-sm">
                           <span className="truncate font-medium text-ink">{item.referrer || 'Прямой переход'}</span>
-                          <span className="whitespace-nowrap text-muted">{item.clicks.toLocaleString('ru-RU')} <span className="text-slate-400">· {percentage}%</span></span>
+                          <span className="whitespace-nowrap text-muted">{item.clicks.toLocaleString('ru-RU')} <span className="referrer-percentage">· {percentage}%</span></span>
                         </div>
-                        <div className="h-1.5 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-brand" style={{ width: `${Math.min(percentage, 100)}%` }} /></div>
+                        <div className="progress-track h-1.5 overflow-hidden rounded-full"><div className="h-full rounded-full bg-brand" style={{ width: `${Math.min(percentage, 100)}%` }} /></div>
                       </div>
                     </div>
                   )

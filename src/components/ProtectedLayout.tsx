@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { api, clearToken, getToken, UNAUTHORIZED_EVENT } from '../api/client'
+import ThemeToggle from './ThemeToggle'
 
 export default function ProtectedLayout() {
   const navigate = useNavigate()
@@ -23,8 +24,8 @@ export default function ProtectedLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white">
+    <div className="application-shell">
+      <header className="app-header">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link to="/links" className="brand-lockup">
             <span className="brand-mark">↗</span>
@@ -32,6 +33,7 @@ export default function ProtectedLayout() {
           </Link>
           <div className="flex items-center gap-3">
             {email && <span className="hidden text-sm text-muted sm:inline">{email}</span>}
+            <ThemeToggle />
             <button onClick={logout} className="button-quiet">Выйти</button>
           </div>
         </div>
