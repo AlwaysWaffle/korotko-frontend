@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #f8fafc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input, select { font: inherit; }
+button:disabled { cursor: not-allowed; opacity: .6; }
+
+.auth-page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; background: radial-gradient(ellipse at top, #eeedff 0, #f8fafc 55%); }
+.brand-lockup { display: inline-flex; align-items: center; gap: .55rem; font-size: 1.15rem; font-weight: 750; letter-spacing: -.04em; color: #172033; }
+.brand-mark { display: inline-flex; width: 2rem; height: 2rem; align-items: center; justify-content: center; border-radius: .7rem; background: #5145e5; color: white; font-size: 1.15rem; }
+.panel { border: 1px solid #e8ebf1; border-radius: 1rem; background: white; padding: 1.25rem; box-shadow: 0 2px 6px rgb(23 32 51 / 3%); }
+.field-label { display: flex; flex-direction: column; gap: .45rem; color: #344054; font-size: .875rem; font-weight: 600; }
+.input, .select-input { width: 100%; border: 1px solid #dce1ea; border-radius: .65rem; background: white; padding: .68rem .8rem; color: #172033; outline: none; transition: border-color .15s, box-shadow .15s; }
+.input::placeholder { color: #a0a9b8; }
+.input:focus, .select-input:focus { border-color: #8178ed; box-shadow: 0 0 0 3px rgb(81 69 229 / 12%); }
+.input-prefix { display: inline-flex; align-items: center; padding: 0 .85rem; border: 1px solid #dce1ea; border-right: 0; border-radius: .65rem 0 0 .65rem; background: #f8fafc; color: #718096; }
+.button-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 2.7rem; border: 0; border-radius: .65rem; background: #5145e5; padding: .65rem 1rem; color: white; font-size: .875rem; font-weight: 650; transition: background .15s; }
+.button-primary:hover:not(:disabled) { background: #4338ca; }
+.button-quiet { display: inline-flex; align-items: center; justify-content: center; min-height: 2.25rem; border: 1px solid #e1e5ed; border-radius: .55rem; background: white; padding: .35rem .75rem; color: #475467; font-size: .8rem; font-weight: 550; }
+.button-quiet:hover:not(:disabled) { background: #f8fafc; }
+.notice-error, .notice-success { display: flex; align-items: center; gap: .5rem; border-radius: .65rem; padding: .75rem .9rem; font-size: .85rem; }
+.notice-error { border: 1px solid #fecaca; background: #fef2f2; color: #b42318; }
+.notice-success { border: 1px solid #bbf7d0; background: #f0fdf4; color: #15803d; }
+.eyebrow { color: #746be5; font-size: .68rem; font-weight: 750; letter-spacing: .13em; }
+.table-head { background: #f8fafc; color: #7c8798; font-size: .7rem; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; }
+.table-head th { padding: .8rem 1.25rem; }
+.table-row { transition: background .12s; }
+.table-row:hover { background: #fafbff; }
+.icon-button { color: #8490a2; font-size: 1rem; }
+.icon-button:hover { color: #5145e5; }
+.table-action { color: #5145e5; font-weight: 550; }
+.table-danger { color: #d04444; font-weight: 550; }
+.status-active, .status-disabled, .status-expired { display: inline-flex; border-radius: 99px; padding: .25rem .55rem; font-size: .72rem; font-weight: 600; }
+.status-active { background: #e9f8ef; color: #16834b; }
+.status-disabled { background: #f1f3f6; color: #667085; }
+.status-expired { background: #fff3e8; color: #c26b13; }
+.stat-card { min-height: 9.5rem; border: 1px solid #e8ebf1; border-radius: 1rem; background: white; padding: 1.25rem 1.4rem; box-shadow: 0 2px 6px rgb(23 32 51 / 3%); }
+.stat-icon { display: inline-flex; height: 2.25rem; width: 2.25rem; align-items: center; justify-content: center; border-radius: .75rem; background: #eeedff; color: #5145e5; font-size: 1.1rem; }
+.stat-icon-green { background: #eaf8f0; color: #16834b; }
+.spinner { width: 1.1rem; height: 1.1rem; border: 2px solid #dedbf9; border-top-color: #5145e5; border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (min-width: 640px) {
+  .panel { padding: 1.5rem; }
+}

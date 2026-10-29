@@ -1,0 +1,24 @@
+# зависимости и сборка
+node_modules/
+dist/
+
+# переменные окружения (example остаётся в репозитории)
+.env
+.env.*
+!.env.example
+
+# логи
+*.log
+npm-debug.log*
+
+# кэш и временные файлы
+.vite/
+*.tsbuildinfo
+coverage/
+
+# редакторы и системные файлы
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
